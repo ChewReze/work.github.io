@@ -251,7 +251,7 @@
       <main class="content">
         <section class="page active" id="page-local-report">
           <div class="page-card">
-            <div class="page-header"><div><div class="page-title">Coupang本土店报告</div><div class="header-note">拉取完成后可按一个或多个必选月份查询；前置展示原始报告字段，后置展示派生字段及报告解析、单据生成处理状态。</div></div><div><button class="btn btn-primary" onclick="pullReport('local')">拉取报告</button><button class="btn" onclick="openTaskDrawer('pull','local')">查看拉取状态</button><button class="btn" onclick="toast('导出成功','success')">导出</button></div></div>
+            <div class="page-header"><div><div class="page-title">Coupang本土店报告</div><div class="header-note">先选择一个或多个日期并确认，再拉取报告。原始报告按数值列完整清洗拆行（包括 0 值）；每行以 Type 标识来源字段，并将该字段数值写入“数量”。后置展示派生字段及报告解析、单据生成处理状态。</div></div><div><button class="btn btn-primary" onclick="pullReport('local')">拉取报告</button><button class="btn" onclick="openTaskDrawer('pull','local')">查看拉取状态</button><button class="btn" onclick="toast('导出成功','success')">导出</button></div></div>
             <div class="toolbar">
               <div class="filter-group"><label>是否异常</label><select id="local-abnormal"><option value="">全部</option><option>是</option><option>否</option></select></div>
               <div class="filter-group"><label>生成单据号</label><input type="text" id="local-docno" placeholder="请输入" /></div>
@@ -262,14 +262,14 @@
               <div class="filter-group"><label>SKU ID</label><input type="text" id="local-skuid" placeholder="请输入" /></div>
               <button class="btn btn-primary" onclick="filterLocalReport()">查询</button><button class="btn" onclick="resetLocalReport()">重置</button>
             </div>
-            <div class="table-wrap"><table><thead class="group-row"><tr><th colspan="17">原始报告字段（本土店库存变动详情，未转置）</th><th colspan="17" class="derived-col">解析后派生字段</th></tr></thead><thead id="local-report-head"></thead><tbody id="local-report-body"></tbody></table></div>
+            <div class="table-wrap"><table><thead class="group-row"><tr><th colspan="5">原始报告字段（本土店库存变动详情）</th><th colspan="17" class="derived-col">解析后派生字段</th></tr></thead><thead id="local-report-head"></thead><tbody id="local-report-body"></tbody></table></div>
             <div class="pagination"><span>共 <strong id="local-total">0</strong> 条</span><button>‹</button><button class="active">1</button><button>›</button></div>
           </div>
         </section>
 
         <section class="page" id="page-overseas-report">
           <div class="page-card">
-            <div class="page-header"><div><div class="page-title">Coupang海外店报告</div><div class="header-note">海外一店、海外二店按导入标识识别仓库；拉取完成后可按一个或多个必选月份查询，报告期末数量作为海外店盘点权威数量。</div></div><div><button class="btn btn-primary" onclick="pullReport('overseas')">拉取报告</button><button class="btn" onclick="openTaskDrawer('pull','overseas')">查看拉取状态</button><button class="btn" onclick="toast('导出成功','success')">导出</button></div></div>
+            <div class="page-header"><div><div class="page-title">Coupang海外店报告</div><div class="header-note">先选择一个或多个日期并确认，再拉取报告。海外一店、海外二店按导入标识识别仓库；报告期末数量作为海外店盘点权威数量。</div></div><div><button class="btn btn-primary" onclick="pullReport('overseas')">拉取报告</button><button class="btn" onclick="openTaskDrawer('pull','overseas')">查看拉取状态</button><button class="btn" onclick="toast('导出成功','success')">导出</button></div></div>
             <div class="toolbar">
               <div class="filter-group"><label>海外店</label><select id="over-store"><option value="">全部</option><option value="Coupang-CGF1">海外1店</option><option value="Coupang-CGF2">海外2店</option></select></div>
               <div class="filter-group"><label>是否异常</label><select id="over-abnormal"><option value="">全部</option><option>是</option><option>否</option></select></div>
@@ -291,12 +291,13 @@
             <div class="toolbar">
               <div class="filter-group"><label>平台</label><select id="cfg-platform"><option value="">全部</option><option>Coupang</option></select></div>
               <div class="filter-group"><label>站点</label><select id="cfg-site"><option value="">全部</option><option>Coupang本土-KR</option><option>Coupang-CGF1</option><option>Coupang-CGF2</option></select></div>
-              <div class="filter-group"><label>大场景分类</label><select id="cfg-scene"><option value="">全部</option><option>调拨</option><option>发运</option><option>退运</option><option>移除</option><option>其他</option><option>期末</option></select></div>
-              <div class="filter-group"><label>业务类</label><select id="cfg-biz"><option value="">全部</option><option>调拨</option><option>出库</option><option>重新配送</option><option>顾客退货</option><option>已移出库</option><option>处理中</option></select></div>
+              <div class="filter-group"><label>一级场景</label><select id="cfg-primary-scene"><option value="">全部</option><option>备货</option><option>销售</option><option>售后</option><option>调拨</option><option>库内调整</option><option>其他</option></select></div>
+              <div class="filter-group"><label>二级场景</label><select id="cfg-secondary-scene"><option value="">全部</option><option>平台仓库内调整-有索赔</option></select></div>
+              <div class="filter-group"><label>是否生成单据</label><select id="cfg-doc-generate"><option value="">全部</option><option value="是">是</option><option value="否">否</option></select></div>
               <button class="btn btn-primary" onclick="renderConfig()">查询</button><button class="btn" onclick="resetConfig()">重置</button>
             </div>
             <div class="section-label">仓库报告配置表</div>
-            <div class="table-wrap"><table><thead><tr><th>平台*</th><th>站点*</th><th>站点匹配逻辑*</th><th>平台货品字段*</th><th>平台日期*</th><th>平台数量*</th><th>平台状态字段*</th><th>状态设置规则*</th><th>库存变动单号*</th><th>大场景分类*</th><th>业务类分类规则*</th><th>生成单据*</th><th>数据库表名*</th><th class="center">操作</th></tr></thead><tbody id="config-body"></tbody></table></div>
+            <div class="table-wrap"><table><thead><tr><th>平台*</th><th>站点*</th><th>Type*</th><th>站点匹配逻辑*</th><th>平台货品字段*</th><th>平台日期*</th><th>平台数量*</th><th>一级场景*</th><th>二级场景</th><th>是否生成单据*</th><th>生成单据类型*</th><th>数据库表名*</th><th class="center">操作</th></tr></thead><tbody id="config-body"></tbody></table></div>
             <div class="pagination"><span>共 <strong id="config-total">0</strong> 条</span></div>
           </div>
         </section>
@@ -307,7 +308,7 @@
               <select id="inbound-order-key"><option>入库单号</option></select>
               <select id="inbound-order-match"><option>精确</option></select>
               <input type="text" id="inbound-order-value" placeholder="批量查询" />
-              <select id="inbound-order-warehouse"><option value="">韩国Coupang本土店仓</option><option>韩国Coupang本土店仓</option></select>
+              <select id="inbound-order-warehouse"><option value="">入库仓库</option><option>韩国Coupang本土店仓</option><option>韩国Coupang海外1店仓</option><option>韩国Coupang海外2店仓</option></select>
               <select id="inbound-order-type"><option value="">业务类型</option><option>调拨入库</option><option>退货入库</option></select>
               <div class="filter-group"><label>入库时间：</label><input type="text" id="inbound-order-date" placeholder="开始日期 - 结束日期" /></div>
               <button class="btn btn-primary" onclick="queryRegularOrders('inbound')">⌕ 搜索</button><button class="btn" onclick="resetRegularOrders('inbound')">⌫ 重置</button>
@@ -326,7 +327,7 @@
               <select id="outbound-order-key"><option>出库单号</option></select>
               <select id="outbound-order-match"><option>精确</option></select>
               <input type="text" id="outbound-order-value" placeholder="批量查询" />
-              <select id="outbound-order-warehouse"><option value="">韩国Coupang本土店仓</option><option>韩国Coupang本土店仓</option></select>
+              <select id="outbound-order-warehouse"><option value="">出库仓库</option><option>韩国Coupang本土店仓</option><option>韩国Coupang海外1店仓</option><option>韩国Coupang海外2店仓</option></select>
               <select id="outbound-order-type"><option value="">业务类型</option><option>调拨出库</option><option>销售出库</option></select>
               <div class="filter-group"><label>出库时间：</label><input type="text" id="outbound-order-date" placeholder="开始日期 - 结束日期" /></div>
               <button class="btn btn-primary" onclick="queryRegularOrders('outbound')">⌕ 搜索</button><button class="btn" onclick="resetRegularOrders('outbound')">⌫ 重置</button>
@@ -348,7 +349,7 @@
               <select id="other-inbound-status"><option value="">状态</option><option>已审核</option></select>
               <select id="other-inbound-warehouse"><option value="">入库仓库</option><option>韩国Coupang本土店仓</option><option>韩国Coupang海外1店仓</option><option>韩国Coupang海外2店仓</option></select>
               <select id="other-inbound-first-scene"><option value="">一级库存场景</option><option>盘点</option></select>
-              <select id="other-inbound-second-scene"><option value="">二级库存场景</option><option>调拨入库调增</option></select>
+              <select id="other-inbound-second-scene"><option value="">二级库存场景</option><option>待调查调整</option><option>平台仓库内调整-有索赔</option><option>平台仓报告差异调整</option></select>
               <button class="btn btn-primary" onclick="queryOtherOrders('inbound')">⌕ 搜索</button><button class="btn" onclick="resetOtherOrders('inbound')">⌫ 重置</button>
             </div>
             <div class="toolbar">
@@ -368,7 +369,7 @@
               <select id="other-outbound-status"><option value="">状态</option><option>已审核</option></select>
               <select id="other-outbound-warehouse"><option value="">出库仓库</option><option>韩国Coupang本土店仓</option><option>韩国Coupang海外1店仓</option><option>韩国Coupang海外2店仓</option></select>
               <select id="other-outbound-first-scene"><option value="">一级库存场景</option><option>盘点</option></select>
-              <select id="other-outbound-second-scene"><option value="">二级库存场景</option><option>销售出库调减</option><option>调拨出库调减</option><option>确认丢失/损坏调减</option></select>
+              <select id="other-outbound-second-scene"><option value="">二级库存场景</option><option>待调查调整</option><option>平台仓库内调整-有索赔</option><option>平台仓报告差异调整</option></select>
               <button class="btn btn-primary" onclick="queryOtherOrders('outbound')">⌕ 搜索</button><button class="btn" onclick="resetOtherOrders('outbound')">⌫ 重置</button>
             </div>
             <div class="toolbar">
@@ -449,10 +450,10 @@
       'stocktake-detail': '首页 / 仓储 / 库存盘点 / 盘点结果详情'
     };
 
+    // 本土店报告的 A-J 数值列在清洗层完整拆为明细行，数值为 0 的列也保留；仅新增 Type 作为报告字段，数量仍按原口径保留在派生字段。
     const localColumns = [
-      ['registrationId','注册商品ID'], ['attributeId','属性ID'], ['skuId','SKU ID'], ['productName','注册商品名，属性名'],
-      ['beforeQty','变更前 (A)'], ['transferDone','调拨完成 (B)'], ['inboundRequest','入库申请数量'], ['inbound','入库 (C1)'], ['transferInProgress','调拨中 (C2)'], ['delayedSale','延迟开始销售 (C2)'], ['outbound','出库 (D1)'], ['redelivery','重新配送 (D2)'], ['customerReturn','顾客退货 (E)'], ['movedOut','已移出库 (F)'], ['processing','处理中 (G)'], ['confirmedLoss','确认丢失/损坏 (H)'], ['afterQty','变更后 (J)'],
-      ['newQuantity','New Quantity'], ['site','站点'], ['localDate','当地日期'], ['systemSku','系统SKU'], ['scene','大场景分类'], ['biz','业务类'], ['warehouse','仓库'], ['sellable','是否可售'], ['quantity','数量'], ['dailySummary','是否按天汇总'], ['parsed','是否解析完成'], ['documentNo','生成单据号'], ['hasUpdate','是否存在更新'], ['docAbnormal','单据生成是否异常'], ['docAbnormalReason','单据生成异常原因'], ['parseAbnormal','报告解析是否异常'], ['parseAbnormalReason','报告解析异常原因']
+      ['registrationId','注册商品ID'], ['attributeId','属性ID'], ['skuId','SKU ID'], ['productName','注册商品名，属性名'], ['type','Type'],
+      ['newQuantity','New Quantity'], ['site','站点'], ['localDate','当地日期'], ['systemSku','系统SKU'], ['primaryScene','一级场景'], ['secondaryScene','二级场景'], ['warehouse','仓库'], ['sellable','是否可售'], ['quantity','数量'], ['dailySummary','是否按天汇总'], ['parsed','是否解析完成'], ['documentNo','生成单据号'], ['hasUpdate','是否存在更新'], ['docAbnormal','单据生成是否异常'], ['docAbnormalReason','单据生成异常原因'], ['parseAbnormal','报告解析是否异常'], ['parseAbnormalReason','报告解析异常原因']
     ];
     const overseasColumns = [
       ['viId','VI ID'], ['productId','Product ID'], ['sourceQuantity','Quantity'],
@@ -460,19 +461,43 @@
     ];
 
     const localReportData = [
-      { registrationId:'16194119404', attributeId:'95393260616', skuId:'73369384', productName:'本土店报告原始商品名称 A', beforeQty:120, transferDone:20, inboundRequest:0, inbound:0, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:140, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-07-31', systemSku:'E320-ST-WT-KR-608', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'调拨入库', report:20, system:18, direction:'其他入库' } },
-      { registrationId:'16194119405', attributeId:'95393260635', skuId:'73369402', productName:'本土店报告原始商品名称 B', beforeQty:80, transferDone:15, inboundRequest:0, inbound:0, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:95, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-07-31', systemSku:'E320-ST-WT-KR-613', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'调拨入库', report:15, system:13, direction:'其他入库' } },
-      { registrationId:'16194119406', attributeId:'95393260648', skuId:'73369411', productName:'本土店报告原始商品名称 C', beforeQty:60, transferDone:6, inboundRequest:0, inbound:0, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:66, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-07-31', systemSku:'E320-ST-WT-KR-614', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'调拨入库', report:6, system:6, direction:'-' } },
+      { registrationId:'16194119404', attributeId:'95393260616', skuId:'73369384', productName:'本土店报告原始商品名称 A', beforeQty:120, transferDone:0, inboundRequest:0, inbound:20, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:140, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-07-31', systemSku:'E320-ST-WT-KR-608', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'调拨入库', report:20, system:18, direction:'其他入库' } },
+      { registrationId:'16194119405', attributeId:'95393260635', skuId:'73369402', productName:'本土店报告原始商品名称 B', beforeQty:80, transferDone:0, inboundRequest:0, inbound:15, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:95, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-07-31', systemSku:'E320-ST-WT-KR-613', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'调拨入库', report:15, system:13, direction:'其他入库' } },
+      { registrationId:'16194119406', attributeId:'95393260648', skuId:'73369411', productName:'本土店报告原始商品名称 C', beforeQty:60, transferDone:0, inboundRequest:0, inbound:6, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:66, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-07-31', systemSku:'E320-ST-WT-KR-614', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'调拨入库', report:6, system:6, direction:'-' } },
       { registrationId:'16194119407', attributeId:'95393260629', skuId:'73369391', productName:'本土店报告原始商品名称 D', beforeQty:600, transferDone:0, inboundRequest:0, inbound:0, transferInProgress:0, delayedSale:0, outbound:-567, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:33, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-07-31', systemSku:'E320-ST-WT-KR-609', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'销售出库', report:-567, system:-565, direction:'其他出库' } },
       { registrationId:'16194119408', attributeId:'95393260657', skuId:'73369418', productName:'本土店报告原始商品名称 E', beforeQty:50, transferDone:0, inboundRequest:0, inbound:0, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:35, movedOut:0, processing:0, confirmedLoss:0, afterQty:85, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-07-31', systemSku:'E320-ST-WT-KR-610', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'退货入库', report:35, system:35, direction:'-' } },
       { registrationId:'16194119409', attributeId:'95393260663', skuId:'73369422', productName:'本土店报告原始商品名称 F', beforeQty:30, transferDone:0, inboundRequest:0, inbound:0, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:-11, processing:0, confirmedLoss:0, afterQty:19, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-07-31', systemSku:'E320-ST-WT-KR-611', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'调拨出库', report:-11, system:-9, direction:'其他出库' } },
       { registrationId:'16194119410', attributeId:'95393260674', skuId:'73369435', productName:'本土店报告原始商品名称 G', beforeQty:35, transferDone:0, inboundRequest:0, inbound:0, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:-1, afterQty:34, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-07-31', systemSku:'E320-ST-WT-KR-612', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'确认丢失/损坏', report:-1, system:0, direction:'其他出库' } },
-      { registrationId:'16194119521', attributeId:'95393260721', skuId:'73369521', productName:'本土店 8 月调拨入库演示货品 A', beforeQty:100, transferDone:8, inboundRequest:0, inbound:0, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:108, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-08-31', systemSku:'C120-AC-BK-KR-801', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'调拨入库', report:8, system:6, direction:'其他入库' } },
-      { registrationId:'16194119523', attributeId:'95393260723', skuId:'73369523', productName:'本土店 8 月调拨入库演示货品 B', beforeQty:90, transferDone:11, inboundRequest:0, inbound:0, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:101, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-08-31', systemSku:'C120-AC-BK-KR-802', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'调拨入库', report:11, system:8, direction:'其他入库' } },
-      { registrationId:'16194119524', attributeId:'95393260724', skuId:'73369524', productName:'本土店 8 月调拨入库演示货品 C', beforeQty:70, transferDone:14, inboundRequest:0, inbound:0, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:84, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-08-31', systemSku:'C120-AC-BK-KR-803', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', generationError:'库存体系未维护，无法创建其他入库单。', stocktakeScene:{ scene:'调拨入库', report:14, system:10, direction:'其他入库' } },
+      { registrationId:'16194119521', attributeId:'95393260721', skuId:'73369521', productName:'本土店 8 月调拨入库演示货品 A', beforeQty:100, transferDone:0, inboundRequest:0, inbound:8, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:108, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-08-31', systemSku:'C120-AC-BK-KR-801', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'调拨入库', report:8, system:6, direction:'其他入库' } },
+      { registrationId:'16194119523', attributeId:'95393260723', skuId:'73369523', productName:'本土店 8 月调拨入库演示货品 B', beforeQty:90, transferDone:0, inboundRequest:0, inbound:11, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:101, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-08-31', systemSku:'C120-AC-BK-KR-802', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'调拨入库', report:11, system:8, direction:'其他入库' } },
+      { registrationId:'16194119524', attributeId:'95393260724', skuId:'73369524', productName:'本土店 8 月调拨入库演示货品 C', beforeQty:70, transferDone:0, inboundRequest:0, inbound:14, transferInProgress:0, delayedSale:0, outbound:0, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:84, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-08-31', systemSku:'C120-AC-BK-KR-803', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', generationError:'库存体系未维护，无法创建其他入库单。', stocktakeScene:{ scene:'调拨入库', report:14, system:10, direction:'其他入库' } },
       { registrationId:'16194119522', attributeId:'95393260722', skuId:'73369522', productName:'本土店 8 月销售出库演示货品', beforeQty:80, transferDone:0, inboundRequest:0, inbound:0, transferInProgress:0, delayedSale:0, outbound:-5, redelivery:0, customerReturn:0, movedOut:0, processing:0, confirmedLoss:0, afterQty:75, newQuantity:'', site:'Coupang本土-KR', localDate:'2026-08-31', systemSku:'E310-ST-GY-KR-802', scene:'', biz:'', warehouse:'韩国Coupang本土店仓', sellable:'', quantity:'', dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'', stocktakeScene:{ scene:'销售出库', report:-5, system:-2, direction:'其他出库' } }
     ];
     // 海外店演示数据：数量等于原始 Quantity；盘点期末读取“数量”，New Quantity 仅保留为报告派生展示字段。
+    const localSplitRules = [
+      { field:'beforeQty', label:'变更前 (A)', primaryScene:'', secondaryScene:'', shouldGenerate:'否', docGen:'不生成' },
+      { field:'transferDone', label:'调拨完成 (B)', primaryScene:'', secondaryScene:'', shouldGenerate:'否', docGen:'不生成' },
+      { field:'inboundRequest', label:'入库申请数量', primaryScene:'', secondaryScene:'', shouldGenerate:'否', docGen:'不生成' },
+      { field:'inbound', label:'入库 (C1)', primaryScene:'备货', secondaryScene:'', shouldGenerate:'否', docGen:'不生成' },
+      { field:'transferInProgress', label:'调拨中 (C2)', primaryScene:'', secondaryScene:'', shouldGenerate:'否', docGen:'不生成' },
+      { field:'delayedSale', label:'延迟开始销售 (C2)', primaryScene:'其他', secondaryScene:'', shouldGenerate:'否', docGen:'不生成' },
+      { field:'outbound', label:'出库 (D1)', primaryScene:'销售', secondaryScene:'', shouldGenerate:'否', docGen:'不生成' },
+      { field:'redelivery', label:'重新配送 (D2)', primaryScene:'销售', secondaryScene:'', shouldGenerate:'否', docGen:'不生成' },
+      { field:'customerReturn', label:'顾客退货 (E)', primaryScene:'售后', secondaryScene:'', shouldGenerate:'否', docGen:'不生成' },
+      { field:'movedOut', label:'已移出库 (F)', primaryScene:'调拨', secondaryScene:'', shouldGenerate:'否', docGen:'不生成' },
+      { field:'processing', label:'处理中 (G)', primaryScene:'库内调整', secondaryScene:'平台仓库内调整-有索赔', shouldGenerate:'是', docGen:'其他出入库单' },
+      { field:'confirmedLoss', label:'确认丢失/损坏 (H)', primaryScene:'库内调整', secondaryScene:'平台仓库内调整-有索赔', shouldGenerate:'是', docGen:'其他出入库单' },
+      { field:'afterQty', label:'变更后 (J)', primaryScene:'', secondaryScene:'', shouldGenerate:'否', docGen:'不生成' }
+    ];
+    function cleanTypeLabel(label) { return label.replace(/\s*\([^)]*\)\s*/g,'').trim(); }
+    function localReportRows() {
+      return localReportData.flatMap(source=>localSplitRules
+        .map(rule=>{
+          const document=preStocktakeDocumentFor(source,rule);
+          return { ...source, type:cleanTypeLabel(rule.label), quantity:Number(source[rule.field]), primaryScene:rule.primaryScene, secondaryScene:rule.secondaryScene, shouldGenerate:rule.shouldGenerate, expectedDocumentType:rule.docGen, documentNo:document?document.documentNo:'', docAbnormal:document?'否':source.docAbnormal, docAbnormalReason:document?'':source.docAbnormalReason };
+        })
+      );
+    }
     const overseasReportData = [
       { viId:'92529096184', productId:'92529096184', sourceQuantity:19, newQuantity:19, site:'Coupang-CGF1', localDate:'2026-07-31', systemSku:'S700-ST-BL-KR-615-REF', scene:'', biz:'', warehouse:'韩国Coupang海外1店仓', sellable:'', quantity:19, dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'' },
       { viId:'92529096185', productId:'92529096185', sourceQuantity:86, newQuantity:86, site:'Coupang-CGF1', localDate:'2026-07-31', systemSku:'S820-ST-BK-KR-615', scene:'', biz:'', warehouse:'韩国Coupang海外1店仓', sellable:'', quantity:86, dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'' },
@@ -492,48 +517,74 @@
       { viId:'93316832939', productId:'8991797347', sourceQuantity:68, newQuantity:68, site:'Coupang-CGF2', localDate:'2026-08-31', systemSku:'S820-ST-BK-KR-646', scene:'', biz:'', warehouse:'韩国Coupang海外2店仓', sellable:'', quantity:68, dailySummary:'否', parsed:'是', documentNo:'', hasUpdate:'否', docAbnormal:'否', docAbnormalReason:'', parseAbnormal:'否', parseAbnormalReason:'' }
     ];
 
+    // 规则配置仅服务盘点前的解析和单据生成：除库内调整有索赔外，其余 Type 只赋一级场景，不前置生成单据。
     let configData = [
-      { id:1, platform:'Coupang', site:'Coupang本土-KR', siteLogic:'按本土店报告来源识别', skuField:'属性ID', platformDate:'Date', platformQty:'数量', statusField:'Type', statusRule:'按 Type 配置解析规则', inventoryNo:'无（报告未提供）', scene:'按规则匹配', bizRule:'按 Type 配置业务类规则', docGen:'其他出入库单', tableName:'待确认' },
-      { id:2, platform:'Coupang', site:'Coupang-CGF1', siteLogic:'按海外1店导入标识识别', skuField:'VI ID', platformDate:'Date', platformQty:'Quantity', statusField:'无', statusRule:'无场景状态字段', inventoryNo:'无（报告未提供）', scene:'', bizRule:'', docGen:'不在报告解析阶段生成', tableName:'待确认' },
-      { id:3, platform:'Coupang', site:'Coupang-CGF2', siteLogic:'按海外2店导入标识识别', skuField:'VI ID', platformDate:'Date', platformQty:'Quantity', statusField:'无', statusRule:'无场景状态字段', inventoryNo:'无（报告未提供）', scene:'', bizRule:'', docGen:'不在报告解析阶段生成', tableName:'待确认' }
+      { id:1, platform:'Coupang', site:'Coupang本土-KR', type:'入库', siteLogic:'按本土店报告来源识别', skuField:'属性ID', platformDate:'日期', platformQty:'数量', primaryScene:'备货', secondaryScene:'', shouldGenerate:'否', docGen:'不生成', tableName:'待确认' },
+      { id:2, platform:'Coupang', site:'Coupang本土-KR', type:'出库 / 重新配送', siteLogic:'按本土店报告来源识别', skuField:'属性ID', platformDate:'日期', platformQty:'数量', primaryScene:'销售', secondaryScene:'', shouldGenerate:'否', docGen:'不生成', tableName:'待确认' },
+      { id:3, platform:'Coupang', site:'Coupang本土-KR', type:'顾客退货', siteLogic:'按本土店报告来源识别', skuField:'属性ID', platformDate:'日期', platformQty:'数量', primaryScene:'售后', secondaryScene:'', shouldGenerate:'否', docGen:'不生成', tableName:'待确认' },
+      { id:4, platform:'Coupang', site:'Coupang本土-KR', type:'已移出库', siteLogic:'按本土店报告来源识别', skuField:'属性ID', platformDate:'日期', platformQty:'数量', primaryScene:'调拨', secondaryScene:'', shouldGenerate:'否', docGen:'不生成', tableName:'待确认' },
+      { id:5, platform:'Coupang', site:'Coupang本土-KR', type:'处理中 / 确认丢失/损坏', siteLogic:'按本土店报告来源识别', skuField:'属性ID', platformDate:'日期', platformQty:'数量', primaryScene:'库内调整', secondaryScene:'平台仓库内调整-有索赔', shouldGenerate:'是', docGen:'其他出入库单', tableName:'待确认' },
+      { id:6, platform:'Coupang', site:'Coupang本土-KR', type:'延迟开始销售', siteLogic:'按本土店报告来源识别', skuField:'属性ID', platformDate:'日期', platformQty:'数量', primaryScene:'其他', secondaryScene:'', shouldGenerate:'否', docGen:'不生成', tableName:'待确认' },
+      { id:7, platform:'Coupang', site:'Coupang-CGF1', type:'Quantity', siteLogic:'按海外1店导入标识识别', skuField:'VI ID', platformDate:'日期', platformQty:'Quantity', primaryScene:'', secondaryScene:'', shouldGenerate:'否', docGen:'不生成', tableName:'待确认' },
+      { id:8, platform:'Coupang', site:'Coupang-CGF2', type:'Quantity', siteLogic:'按海外2店导入标识识别', skuField:'VI ID', platformDate:'日期', platformQty:'Quantity', primaryScene:'', secondaryScene:'', shouldGenerate:'否', docGen:'不生成', tableName:'待确认' }
     ];
     let configEditing = null;
-    let configId = 4;
+    let configId = 9;
 
     // 本土店出入库单演示数据：普通出入库单仅保留销售出库、调拨出库、退货入库、调拨入库四种业务类型。
     const regularInboundOrders = [
-      { documentNo:'IB260731001', documentType:'入库单', documentDate:'2026-07-31', warehouse:'韩国Coupang本土店仓', status:'已审核', businessNode:'调拨入库', businessDocumentNo:'AS26073100001', warehouseTime:'2026-07-31 23:59:59', createdBy:'系统', createdAt:'2026-07-31 23:59:59', note:'Coupang本土店调拨入库演示数据', items:[
+      { documentNo:'IB260731001', documentType:'入库单', documentDate:'2026-07-31', warehouse:'韩国Coupang本土店仓', status:'已审核', businessNode:'', businessType:'调拨入库', firstScene:'备货', secondScene:'待调查调整', businessDocumentNo:'AS26073100001', warehouseTime:'2026-07-31 23:59:59', createdBy:'系统', createdAt:'2026-07-31 23:59:59', note:'Coupang本土店调拨入库演示数据', items:[
         { sku:'E320-ST-WT-KR-608', name:'本土店报告原始商品名称 A', quantity:18, inventorySystem:'公共' },
         { sku:'E320-ST-WT-KR-613', name:'本土店报告原始商品名称 B', quantity:13, inventorySystem:'公共' },
         { sku:'E320-ST-WT-KR-614', name:'本土店报告原始商品名称 C', quantity:6, inventorySystem:'公共' }
       ]},
-      { documentNo:'IB260731002', documentType:'入库单', documentDate:'2026-07-31', warehouse:'韩国Coupang本土店仓', status:'已审核', businessNode:'退货入库', businessDocumentNo:'RMA26073100001', warehouseTime:'2026-07-31 23:59:59', createdBy:'系统', createdAt:'2026-07-31 23:59:59', note:'Coupang本土店退货入库演示数据', items:[
+      { documentNo:'IB260731002', documentType:'入库单', documentDate:'2026-07-31', warehouse:'韩国Coupang本土店仓', status:'已审核', businessNode:'', businessType:'退货入库', firstScene:'售后', secondScene:'待调查调整', businessDocumentNo:'RMA26073100001', warehouseTime:'2026-07-31 23:59:59', createdBy:'系统', createdAt:'2026-07-31 23:59:59', note:'Coupang本土店退货入库演示数据', items:[
         { sku:'E320-ST-WT-KR-610', name:'本土店报告原始商品名称 E', quantity:35, inventorySystem:'公共' }
       ]},
-      { documentNo:'IB260831001', documentType:'入库单', documentDate:'2026-08-31', warehouse:'韩国Coupang本土店仓', status:'已审核', businessNode:'调拨入库', businessDocumentNo:'AS26083100001', warehouseTime:'2026-08-31 23:59:59', createdBy:'系统', createdAt:'2026-08-31 23:59:59', note:'Coupang本土店调拨入库演示数据', items:[
+      { documentNo:'IB260831001', documentType:'入库单', documentDate:'2026-08-31', warehouse:'韩国Coupang本土店仓', status:'已审核', businessNode:'', businessType:'调拨入库', firstScene:'备货', secondScene:'待调查调整', businessDocumentNo:'AS26083100001', warehouseTime:'2026-08-31 23:59:59', createdBy:'系统', createdAt:'2026-08-31 23:59:59', note:'Coupang本土店调拨入库演示数据', items:[
         { sku:'C120-AC-BK-KR-801', name:'本土店 8 月调拨入库演示货品 A', quantity:6, inventorySystem:'公共' },
         { sku:'C120-AC-BK-KR-802', name:'本土店 8 月调拨入库演示货品 B', quantity:8, inventorySystem:'公共' },
         { sku:'C120-AC-BK-KR-803', name:'本土店 8 月调拨入库演示货品 C', quantity:10, inventorySystem:'公共' }
+      ]},
+      { documentNo:'IB260831101', documentType:'入库单', documentDate:'2026-08-31', warehouse:'韩国Coupang海外1店仓', status:'已审核', businessNode:'', businessType:'调拨入库', firstScene:'调拨', secondScene:'调拨入库', businessDocumentNo:'AS26083100101', warehouseTime:'2026-08-31 23:59:59', createdBy:'系统', createdAt:'2026-08-31 23:59:59', note:'Coupang海外1店当月入库流水演示数据', items:[
+        { sku:'S820-ST-BK-KR-615', name:'Coupang海外1店货品', quantity:6, inventorySystem:'公共' },
+        { sku:'C120-AC-BK-KR-615', name:'Coupang海外1店货品', quantity:4, inventorySystem:'公共' }
+      ]},
+      { documentNo:'IB260831102', documentType:'入库单', documentDate:'2026-08-31', warehouse:'韩国Coupang海外2店仓', status:'已审核', businessNode:'', businessType:'调拨入库', firstScene:'调拨', secondScene:'调拨入库', businessDocumentNo:'AS26083100102', warehouseTime:'2026-08-31 23:59:59', createdBy:'系统', createdAt:'2026-08-31 23:59:59', note:'Coupang海外2店当月入库流水演示数据', items:[
+        { sku:'E310-ST-GY-KR-646', name:'Coupang海外2店货品', quantity:45, inventorySystem:'公共' },
+        { sku:'T520-ST-WT-KR-646', name:'Coupang海外2店货品', quantity:1, inventorySystem:'公共' }
       ]}
     ];
     const regularOutboundOrders = [
-      { documentNo:'OB260731001', documentType:'出库单', documentDate:'2026-07-31', warehouse:'韩国Coupang本土店仓', status:'已审核', businessNode:'销售出库', businessDocumentNo:'SO26073100001', warehouseTime:'2026-07-31 23:59:59', createdBy:'系统', createdAt:'2026-07-31 23:59:59', note:'Coupang本土店销售出库演示数据', items:[
+      { documentNo:'OB260731001', documentType:'出库单', documentDate:'2026-07-31', warehouse:'韩国Coupang本土店仓', status:'已审核', businessNode:'', businessType:'销售出库', firstScene:'销售', secondScene:'待调查调整', businessDocumentNo:'SO26073100001', warehouseTime:'2026-07-31 23:59:59', createdBy:'系统', createdAt:'2026-07-31 23:59:59', note:'Coupang本土店销售出库演示数据', items:[
         { sku:'E320-ST-WT-KR-609', name:'本土店报告原始商品名称 D', quantity:565, inventorySystem:'公共' }
       ]},
-      { documentNo:'OB260731002', documentType:'出库单', documentDate:'2026-07-31', warehouse:'韩国Coupang本土店仓', status:'已审核', businessNode:'调拨出库', businessDocumentNo:'AS26073100002', warehouseTime:'2026-07-31 23:59:59', createdBy:'系统', createdAt:'2026-07-31 23:59:59', note:'Coupang本土店调拨出库演示数据', items:[
+      { documentNo:'OB260731002', documentType:'出库单', documentDate:'2026-07-31', warehouse:'韩国Coupang本土店仓', status:'已审核', businessNode:'', businessType:'调拨出库', firstScene:'调拨', secondScene:'待调查调整', businessDocumentNo:'AS26073100002', warehouseTime:'2026-07-31 23:59:59', createdBy:'系统', createdAt:'2026-07-31 23:59:59', note:'Coupang本土店调拨出库演示数据', items:[
         { sku:'E320-ST-WT-KR-611', name:'本土店报告原始商品名称 F', quantity:9, inventorySystem:'公共' }
       ]},
-      { documentNo:'OB260831001', documentType:'出库单', documentDate:'2026-08-31', warehouse:'韩国Coupang本土店仓', status:'已审核', businessNode:'销售出库', businessDocumentNo:'SO26083100001', warehouseTime:'2026-08-31 23:59:59', createdBy:'系统', createdAt:'2026-08-31 23:59:59', note:'Coupang本土店销售出库演示数据', items:[
+      { documentNo:'OB260831001', documentType:'出库单', documentDate:'2026-08-31', warehouse:'韩国Coupang本土店仓', status:'已审核', businessNode:'', businessType:'销售出库', firstScene:'销售', secondScene:'待调查调整', businessDocumentNo:'SO26083100001', warehouseTime:'2026-08-31 23:59:59', createdBy:'系统', createdAt:'2026-08-31 23:59:59', note:'Coupang本土店销售出库演示数据', items:[
         { sku:'E310-ST-GY-KR-802', name:'本土店 8 月单据生成失败演示货品', quantity:2, inventorySystem:'公共' }
+      ]},
+      { documentNo:'OB260831101', documentType:'出库单', documentDate:'2026-08-31', warehouse:'韩国Coupang海外1店仓', status:'已审核', businessNode:'', businessType:'销售出库', firstScene:'销售', secondScene:'销售出库', businessDocumentNo:'SO26083100101', warehouseTime:'2026-08-31 23:59:59', createdBy:'系统', createdAt:'2026-08-31 23:59:59', note:'Coupang海外1店当月出库流水演示数据', items:[
+        { sku:'S700-ST-BL-KR-615-REF', name:'Coupang海外1店货品', quantity:5, inventorySystem:'公共' },
+        { sku:'E310-ST-GY-KR-615', name:'Coupang海外1店货品', quantity:8, inventorySystem:'公共' }
+      ]},
+      { documentNo:'OB260831102', documentType:'出库单', documentDate:'2026-08-31', warehouse:'韩国Coupang海外2店仓', status:'已审核', businessNode:'', businessType:'销售出库', firstScene:'销售', secondScene:'销售出库', businessDocumentNo:'SO26083100102', warehouseTime:'2026-08-31 23:59:59', createdBy:'系统', createdAt:'2026-08-31 23:59:59', note:'Coupang海外2店当月出库流水演示数据', items:[
+        { sku:'S700-ST-BL-KR-646', name:'Coupang海外2店货品', quantity:7, inventorySystem:'公共' },
+        { sku:'S820-ST-BK-KR-646', name:'Coupang海外2店货品', quantity:10, inventorySystem:'公共' }
       ]}
     ];
-    function regularDocumentImpact(date, sku, businessNode) {
+    function regularDocumentImpact(date, warehouse, sku, businessType='') {
       const month=date.slice(0,7);
-      const count=(orders, sign)=>orders.filter(order=>order.documentDate.startsWith(month)&&order.businessNode===businessNode).flatMap(order=>order.items).filter(item=>item.sku===sku).reduce((sum,item)=>sum+sign*item.quantity,0);
+      const count=(orders, sign)=>orders.filter(order=>order.status==='已审核'&&order.documentDate.startsWith(month)&&order.warehouse===warehouse&&(!businessType||order.businessType===businessType)).flatMap(order=>order.items).filter(item=>item.sku===sku).reduce((sum,item)=>sum+sign*item.quantity,0);
       return count(regularInboundOrders,1)+count(regularOutboundOrders,-1);
     }
+    function stocktakeSceneGeneratedAtParse(row) {
+      const rule=localSplitRules.find(item=>cleanTypeLabel(item.label)===row.stocktakeScene?.scene);
+      return Boolean(rule&&rule.shouldGenerate==='是'&&Number(row[rule.field])!==0);
+    }
     function buildLocalStocktake() {
-      return localReportData.map(row => ({
+      return localReportData.filter(row=>row.stocktakeScene&&!stocktakeSceneGeneratedAtParse(row)).map(row => ({
         month: row.localDate.slice(0, 7),
         date: row.localDate,
         sku: row.systemSku,
@@ -541,22 +592,12 @@
         warehouse: row.warehouse,
         generationError: row.generationError || '',
         ...row.stocktakeScene,
-        system: regularDocumentImpact(row.localDate,row.systemSku,row.stocktakeScene.scene),
-        diff: regularDocumentImpact(row.localDate,row.systemSku,row.stocktakeScene.scene) - row.stocktakeScene.report
+        system: regularDocumentImpact(row.localDate,row.warehouse,row.systemSku,row.stocktakeScene.scene),
+        diff: regularDocumentImpact(row.localDate,row.warehouse,row.systemSku,row.stocktakeScene.scene) - row.stocktakeScene.report
       }));
     }
     let localStocktake = buildLocalStocktake();
-    // 演示用的当月系统流水。期初从同仓、同系统 SKU 的上月报告“数量”获取，期末同样读取本月报告“数量”。
-    const overseasSystemFlows = {
-      'Coupang-CGF1|S700-ST-BL-KR-615-REF':-5,
-      'Coupang-CGF1|S820-ST-BK-KR-615':6,
-      'Coupang-CGF1|E310-ST-GY-KR-615':-8,
-      'Coupang-CGF1|C120-AC-BK-KR-615':4,
-      'Coupang-CGF2|E310-ST-GY-KR-646':45,
-      'Coupang-CGF2|S700-ST-BL-KR-646':-7,
-      'Coupang-CGF2|T520-ST-WT-KR-646':1,
-      'Coupang-CGF2|S820-ST-BK-KR-646':-10
-    };
+    // 海外店期初从同仓、同系统 SKU 的上月报告“数量”获取；期间流水直接汇总出入库及其他出入库单。
     function previousMonth(month) {
       const [year, currentMonth]=month.split('-').map(Number);
       const date=new Date(year, currentMonth-2, 1);
@@ -567,11 +608,13 @@
       return overseasReportData.filter(row=>row.site===site&&row.localDate.startsWith(month)).map(row=>{
         const priorRow=overseasReportData.find(item=>item.site===site&&item.systemSku===row.systemSku&&item.localDate.startsWith(previous));
         const opening=priorRow?Number(priorRow.quantity):0;
-        const flow=overseasSystemFlows[`${site}|${row.systemSku}`]||0;
+        const warehouse=site==='Coupang-CGF1'?'韩国Coupang海外1店仓':'韩国Coupang海外2店仓';
+        const flow=regularDocumentImpact(row.localDate,warehouse,row.systemSku);
         const closing=Number(row.quantity);
         const diff=opening+flow-closing;
         return {
           month:row.localDate.slice(0,7), date:row.localDate, sku:row.systemSku, name:row.systemSku,
+          warehouse,
           opening, flow, closing, diff,
           direction:diff>0?'其他出库':diff<0?'其他入库':'-'
         };
@@ -583,6 +626,36 @@
     };
     let results = [];
     let generatedDocuments = [];
+    function preStocktakeDocumentKey(source, rule) { return `${source.registrationId}|${rule.field}`; }
+    function preStocktakeDocumentFor(source, rule) {
+      return generatedDocuments.find(document=>document.preStocktakeKey===preStocktakeDocumentKey(source,rule));
+    }
+    function autoGeneratePreStocktakeDocuments() {
+      const generated=[];
+      localReportData.forEach(source=>{
+        localSplitRules.filter(rule=>rule.shouldGenerate==='是'&&Number(source[rule.field])!==0).forEach(rule=>{
+          if(preStocktakeDocumentFor(source,rule)) return;
+          const documentType=Number(source[rule.field])>0?'其他入库单':'其他出库单';
+          const serial=String(generatedDocuments.filter(document=>document.preStocktakeKey).length+1).padStart(3,'0');
+          const documentNo=`${documentType==='其他入库单'?'OIB':'OOB'}${source.localDate.replaceAll('-','').slice(2)}8${serial}`;
+          const document={
+            documentNo, documentType, documentDate:source.localDate, warehouse:source.warehouse,
+            status:'已审核', businessNode:'', businessDocumentNo:`RPT-${source.registrationId}`,
+            warehouseTime:`${source.localDate} 23:59:59`, createdBy:'系统', createdAt:taskTime(),
+            note:`报告解析自动生成：${rule.label}`, firstScene:rule.primaryScene,
+            secondScene:rule.secondaryScene, relatedDocumentNo:`RPT-${source.registrationId}`,
+            stocktakeType:'pre-stocktake', preStocktakeKey:preStocktakeDocumentKey(source,rule),
+            generationCondition:'报告解析后自动生成', items:[{
+              rowKey:preStocktakeDocumentKey(source,rule), sku:source.systemSku, name:source.productName,
+              scene:cleanTypeLabel(rule.label), quantity:Math.abs(Number(source[rule.field])),
+              impact:documentType==='其他入库单'?Math.abs(Number(source[rule.field])):-Math.abs(Number(source[rule.field])), inventorySystem:'公共'
+            }]
+          };
+          generatedDocuments.push(document); generated.push(document);
+        });
+      });
+      return generated;
+    }
     let detailResult = null;
     let stocktakeQueried = false;
     let stocktakeFormalQueried = false;
@@ -591,8 +664,8 @@
     let toastTimer;
     let activeDrawer = null;
     const reportPullStates = {
-      local: { label:'Coupang本土店', status:'未拉取', completed:false, running:false, count:0, exception:'—', finishedAt:'—', updateNote:'首次拉取后可按月份查询。' },
-      overseas: { label:'Coupang海外店', status:'未拉取', completed:false, running:false, count:0, exception:'—', finishedAt:'—', updateNote:'首次拉取后可按月份查询。' }
+      local: { label:'Coupang本土店', status:'未拉取', completed:false, running:false, count:0, exception:'—', finishedAt:'—', updateNote:'请先选择一个或多个日期并确认，再拉取报告。' },
+      overseas: { label:'Coupang海外店', status:'未拉取', completed:false, running:false, count:0, exception:'—', finishedAt:'—', updateNote:'请先选择一个或多个日期并确认，再拉取报告。' }
     };
     const stocktakeReconcileStates = {};
 
@@ -671,20 +744,24 @@
       const transferRow=localReportData.find(row=>row.systemSku==='E320-ST-WT-KR-608');
       const outboundRow=localReportData.find(row=>row.systemSku==='E320-ST-WT-KR-609');
       if(!transferRow||!outboundRow||transferRow.reportUpdated) return;
-      transferRow.transferDone+=3; transferRow.afterQty+=3; transferRow.stocktakeScene.report+=3; transferRow.hasUpdate='是'; transferRow.reportUpdated=true;
+      transferRow.inbound+=3; transferRow.afterQty+=3; transferRow.stocktakeScene.report+=3; transferRow.hasUpdate='是'; transferRow.reportUpdated=true;
       outboundRow.outbound-=5; outboundRow.afterQty-=5; outboundRow.stocktakeScene.report-=5; outboundRow.hasUpdate='是'; outboundRow.reportUpdated=true;
       localStocktake=buildLocalStocktake();
     }
     function pullReport(kind) {
       const state=reportPullStates[kind];
+      const months=selectedReportMonths(kind==='overseas'?'over':kind);
+      if(!months.length) { toast('请先选择至少一个日期并点击“确认”后再拉取报告','error'); return; }
       if(state.running) { toast('报告正在拉取，请稍候','error'); openTaskDrawer('pull',kind); return; }
       state.running=true; state.completed=false; state.status='进行中'; state.exception='—'; state.updateNote='正在模拟拉取报告，预计 3 秒完成。';
       if(kind==='local') { localReportQueried=false; renderLocalInitial(); } else { overseasReportQueried=false; renderOverseasInitial(); }
       openTaskDrawer('pull',kind);
       setTimeout(()=>{
         state.running=false; state.completed=true; state.status='已完成'; state.count+=1; state.finishedAt=taskTime();
-        if(kind==='local'&&state.count===2) { applySecondLocalPullUpdate(); state.updateNote='第二次拉取已更新 2026-07：SKU E320-ST-WT-KR-608 的调拨入库报告数量增加 3；SKU E320-ST-WT-KR-609 的销售出库报告数量减少 5。'; }
-        else state.updateNote=state.count===1?'首次拉取完成，可按一个或多个必选月份查询。':'本次拉取完成，未发现新的演示更新。';
+        const parsedDocuments=kind==='local'?autoGeneratePreStocktakeDocuments():[];
+        if(kind==='local'&&state.count===2) { applySecondLocalPullUpdate(); state.updateNote='第二次拉取已更新 2026-07：SKU E320-ST-WT-KR-608 的入库报告数量增加 3；SKU E320-ST-WT-KR-609 的销售出库报告数量减少 5。'; }
+        else state.updateNote=`已按 ${months.map(month=>`${month.slice(0,4)}年${Number(month.slice(5))}月`).join('、')} 拉取报告。`;
+        if(parsedDocuments.length) state.updateNote+=` 已按“是否生成单据=是”的规则自动生成 ${parsedDocuments.length} 张其他出入库单；对应业务场景不再纳入盘点。`;
         if(activeDrawer&&activeDrawer.kind==='pull'&&activeDrawer.key===kind) renderTaskDrawer();
         toast(`${state.label}报告拉取完成`,'success');
       },3000);
@@ -735,17 +812,17 @@
     function cell(value) { if(value === '' || value === null || value === undefined) return '<span style="color:#999">—</span>'; if(typeof value==='number') return `<span class="${value>0?'value-pos':value<0?'value-neg':'value-zero'}">${value}</span>`; if(value==='是') return '<span class="status-no">是</span>'; if(value==='否') return '<span class="status-no">否</span>'; return escapeHtml(value); }
     function statusCell(value) { return value==='是'?'<span class="status-yes">是</span>':'<span class="status-no">否</span>'; }
     function reportHead(columns, derivedStart) { return '<tr>'+columns.map((column,index)=>`<th class="${index === derivedStart ? 'derived-col':''}">${column[1]}</th>`).join('')+'</tr>'; }
-    function reportRows(rows, columns, isLocal) { return rows.map(row=>'<tr>'+columns.map((column,index)=>{ const cls=(isLocal && index===17)||(!isLocal&&index===3)?' class="derived-col"':''; const key=column[0]; const value=['docAbnormal','parseAbnormal'].includes(key)?statusCell(row[key]):cell(row[key]); return `<td${cls}>${value}</td>`; }).join('')+'</tr>').join(''); }
+    function reportRows(rows, columns, isLocal) { return rows.map(row=>'<tr>'+columns.map((column,index)=>{ const cls=(isLocal && index===5)||(!isLocal&&index===3)?' class="derived-col"':''; const key=column[0]; const value=['docAbnormal','parseAbnormal'].includes(key)?statusCell(row[key]):cell(row[key]); return `<td${cls}>${value}</td>`; }).join('')+'</tr>').join(''); }
     function matchText(value, query) { return !query || String(value || '').toLowerCase().includes(query.toLowerCase()); }
     function filterLocalReport() {
       const months=selectedReportMonths('local');
       if(!reportPullStates.local.completed) { toast('请先拉取报告并等待拉取完成','error'); return; }
       if(!months.length) { toast('请选择至少一个日期后再查询','error'); return; }
-      const rows=localReportData.filter(row => (!value('local-abnormal') || (value('local-abnormal')==='是' ? row.parseAbnormal==='是'||row.docAbnormal==='是' : row.parseAbnormal==='否'&&row.docAbnormal==='否')) && matchText(row.documentNo,value('local-docno')) && reportMonthFilter(months,row.localDate) && (!value('local-site') || row.site===value('local-site')) && matchText(row.systemSku,value('local-syssku')) && matchText(row.attributeId,value('local-attrid')) && matchText(row.skuId,value('local-skuid')));
+      const rows=localReportRows().filter(row => (!value('local-abnormal') || (value('local-abnormal')==='是' ? row.parseAbnormal==='是'||row.docAbnormal==='是' : row.parseAbnormal==='否'&&row.docAbnormal==='否')) && matchText(row.documentNo,value('local-docno')) && reportMonthFilter(months,row.localDate) && (!value('local-site') || row.site===value('local-site')) && matchText(row.systemSku,value('local-syssku')) && matchText(row.attributeId,value('local-attrid')) && matchText(row.skuId,value('local-skuid')));
       localReportQueried=true; renderLocal(rows); toast('查询完成','success');
     }
-    function renderLocal(rows=localReportData) { document.getElementById('local-report-head').innerHTML=reportHead(localColumns,17); document.getElementById('local-report-body').innerHTML=reportRows(rows,localColumns,true); document.getElementById('local-total').textContent=rows.length; }
-    function renderLocalInitial() { document.getElementById('local-report-head').innerHTML=reportHead(localColumns,17); document.getElementById('local-report-body').innerHTML=`<tr><td colspan="34" class="center" style="padding:32px;color:#999">${reportPullStates.local.completed?'请选择至少一个日期后点击“查询”获取报告数据':'请先拉取报告，拉取完成后按日期查询报告数据'}</td></tr>`; document.getElementById('local-total').textContent='0'; }
+    function renderLocal(rows=localReportRows()) { document.getElementById('local-report-head').innerHTML=reportHead(localColumns,5); document.getElementById('local-report-body').innerHTML=reportRows(rows,localColumns,true); document.getElementById('local-total').textContent=rows.length; }
+    function renderLocalInitial() { document.getElementById('local-report-head').innerHTML=reportHead(localColumns,5); document.getElementById('local-report-body').innerHTML=`<tr><td colspan="${localColumns.length}" class="center" style="padding:32px;color:#999">${reportPullStates.local.completed?'请选择至少一个日期后点击“查询”获取报告数据':'请先拉取报告，拉取完成后按日期查询报告数据'}</td></tr>`; document.getElementById('local-total').textContent='0'; }
     function resetLocalReport() { ['local-abnormal','local-docno','local-site','local-syssku','local-attrid','local-skuid'].forEach(id=>document.getElementById(id).value=''); clearReportMonths('local'); localReportQueried=false; renderLocalInitial(); }
     function filterOverseasReport() {
       const months=selectedReportMonths('over');
@@ -755,36 +832,40 @@
       overseasReportQueried=true; renderOverseas(rows); toast('查询完成','success');
     }
     function renderOverseas(rows=overseasReportData) { document.getElementById('overseas-report-head').innerHTML=reportHead(overseasColumns,3); document.getElementById('overseas-report-body').innerHTML=reportRows(rows,overseasColumns,false); document.getElementById('overseas-total').textContent=rows.length; }
-    function renderOverseasInitial() { document.getElementById('overseas-report-head').innerHTML=reportHead(overseasColumns,3); document.getElementById('overseas-report-body').innerHTML=`<tr><td colspan="20" class="center" style="padding:32px;color:#999">${reportPullStates.overseas.completed?'请选择至少一个日期后点击“查询”获取报告数据':'请先拉取报告，拉取完成后按日期查询报告数据'}</td></tr>`; document.getElementById('overseas-total').textContent='0'; }
+    function renderOverseasInitial() { document.getElementById('overseas-report-head').innerHTML=reportHead(overseasColumns,3); document.getElementById('overseas-report-body').innerHTML=`<tr><td colspan="${overseasColumns.length}" class="center" style="padding:32px;color:#999">${reportPullStates.overseas.completed?'请选择至少一个日期后点击“查询”获取报告数据':'请先拉取报告，拉取完成后按日期查询报告数据'}</td></tr>`; document.getElementById('overseas-total').textContent='0'; }
     function resetOverseasReport() { ['over-store','over-abnormal','over-site','over-syssku','over-viid','over-productid'].forEach(id=>document.getElementById(id).value=''); clearReportMonths('over'); overseasReportQueried=false; renderOverseasInitial(); }
     function value(id) { return document.getElementById(id).value; }
 
     function configInput(field,row,type='text',options=[]) { if(configEditing!==row.id) return escapeHtml(row[field]||'—'); if(type==='select') return `<select data-field="${field}">${options.map(option=>`<option ${row[field]===option?'selected':''}>${option}</option>`).join('')}</select>`; return `<input type="text" data-field="${field}" value="${escapeHtml(row[field]||'')}" />`; }
-    function currentConfigRows() { return configData.filter(row=>(!value('cfg-platform')||row.platform===value('cfg-platform'))&&(!value('cfg-site')||row.site===value('cfg-site'))&&(!value('cfg-scene')||row.scene===value('cfg-scene'))&&(!value('cfg-biz')||row.bizRule.includes(value('cfg-biz')))); }
+    function currentConfigRows() { return configData.filter(row=>(!value('cfg-platform')||row.platform===value('cfg-platform'))&&(!value('cfg-site')||row.site===value('cfg-site'))&&(!value('cfg-primary-scene')||row.primaryScene===value('cfg-primary-scene'))&&(!value('cfg-secondary-scene')||row.secondaryScene===value('cfg-secondary-scene'))&&(!value('cfg-doc-generate')||row.shouldGenerate===value('cfg-doc-generate'))); }
     function renderConfig() {
       const rows=currentConfigRows();
-      document.getElementById('config-body').innerHTML=rows.map(row=>`<tr data-id="${row.id}" class="${configEditing===row.id?'edit-cell':''}"><td>${configInput('platform',row,'select',['Coupang'])}</td><td>${configInput('site',row,'select',['Coupang本土-KR','Coupang-CGF1','Coupang-CGF2'])}</td><td>${configInput('siteLogic',row)}</td><td>${configInput('skuField',row)}</td><td>${configInput('platformDate',row)}</td><td>${configInput('platformQty',row)}</td><td>${configInput('statusField',row)}</td><td>${configInput('statusRule',row)}</td><td>${configInput('inventoryNo',row)}</td><td>${configInput('scene',row)}</td><td>${configInput('bizRule',row)}</td><td>${configInput('docGen',row,'select',['其他出入库单','不在报告解析阶段生成','无'])}</td><td>${configInput('tableName',row)}</td><td class="center">${configEditing===row.id?`<button class="link" onclick="saveConfig(${row.id})">保存</button> <button class="link" onclick="cancelConfig()">取消</button>`:`<button class="link" onclick="editConfig(${row.id})">编辑</button> <button class="link" onclick="removeConfig(${row.id})">删除</button>`}</td></tr>`).join('');
+      document.getElementById('config-body').innerHTML=rows.map(row=>`<tr data-id="${row.id}" class="${configEditing===row.id?'edit-cell':''}"><td>${configInput('platform',row,'select',['Coupang'])}</td><td>${configInput('site',row,'select',['Coupang本土-KR','Coupang-CGF1','Coupang-CGF2'])}</td><td>${configInput('type',row)}</td><td>${configInput('siteLogic',row)}</td><td>${configInput('skuField',row)}</td><td>${configInput('platformDate',row)}</td><td>${configInput('platformQty',row)}</td><td>${configInput('primaryScene',row)}</td><td>${configInput('secondaryScene',row)}</td><td>${configInput('shouldGenerate',row,'select',['是','否'])}</td><td>${configInput('docGen',row,'select',['其他入库单','其他出库单','其他出入库单','不生成'])}</td><td>${configInput('tableName',row)}</td><td class="center">${configEditing===row.id?`<button class="link" onclick="saveConfig(${row.id})">保存</button> <button class="link" onclick="cancelConfig()">取消</button>`:`<button class="link" onclick="editConfig(${row.id})">编辑</button> <button class="link" onclick="removeConfig(${row.id})">删除</button>`}</td></tr>`).join('');
       document.getElementById('config-total').textContent=rows.length;
     }
     function editConfig(id) { configEditing=id; renderConfig(); }
     function cancelConfig() { configEditing=null; renderConfig(); }
     function saveConfig(id) { const row=configData.find(item=>item.id===id); const tr=document.querySelector(`tr[data-id="${id}"]`); tr.querySelectorAll('[data-field]').forEach(node=>row[node.dataset.field]=node.value.trim()); configEditing=null; renderConfig(); toast('保存成功','success'); }
-    function addConfig() { configData.unshift({id:configId++,platform:'Coupang',site:'Coupang本土-KR',siteLogic:'',skuField:'',platformDate:'',platformQty:'',statusField:'',statusRule:'',inventoryNo:'',scene:'',bizRule:'',docGen:'其他出入库单',tableName:'待确认'}); configEditing=configData[0].id; renderConfig(); }
+    function addConfig() { configData.unshift({id:configId++,platform:'Coupang',site:'Coupang本土-KR',type:'',siteLogic:'',skuField:'',platformDate:'',platformQty:'数量',primaryScene:'',secondaryScene:'',shouldGenerate:'否',docGen:'不生成',tableName:'待确认'}); configEditing=configData[0].id; renderConfig(); }
     function removeConfig(id) { configData=configData.filter(row=>row.id!==id); renderConfig(); toast('已删除配置行','success'); }
-    function resetConfig() { ['cfg-platform','cfg-site','cfg-scene','cfg-biz'].forEach(id=>document.getElementById(id).value=''); renderConfig(); }
+    function resetConfig() { ['cfg-platform','cfg-site','cfg-primary-scene','cfg-secondary-scene','cfg-doc-generate'].forEach(id=>document.getElementById(id).value=''); renderConfig(); }
 
     function signed(value) { return `<span class="${value>0?'value-pos':value<0?'value-neg':'value-zero'}">${value}</span>`; }
     function warehouseName(key) { return key==='local'?'韩国Coupang本土店仓':key==='o1'?'韩国Coupang海外1店仓':'韩国Coupang海外2店仓'; }
     function monthEnd(month) { if(!month) return ''; const [year, mon] = month.split('-').map(Number); return `${year}-${String(mon).padStart(2,'0')}-${String(new Date(year, mon, 0).getDate()).padStart(2,'0')}`; }
     function stocktakeRowKey(type, row) { return [type,row.month,row.sku,type==='local'?row.scene:''].join('|'); }
-    function generatedImpact(type, row) {
-      const key=stocktakeRowKey(type,row);
-      return generatedDocuments.filter(doc=>doc.stocktakeType===type).flatMap(doc=>doc.items).filter(item=>item.rowKey===key).reduce((sum,item)=>sum+item.impact,0);
+    function otherDocumentImpact(type, row) {
+      return generatedDocuments
+        .filter(document=>document.status==='已审核'&&document.documentDate.startsWith(row.month)&&document.warehouse===row.warehouse)
+        .filter(document=>type!=='local'||document.secondScene===row.scene||document.items.some(item=>item.scene===row.scene))
+        .flatMap(document=>document.items.map(item=>({ document, item })))
+        .filter(({item})=>item.sku===row.sku)
+        .reduce((sum,{document,item})=>sum+(document.documentType==='其他入库单'?1:-1)*Number(item.quantity),0);
     }
     function getStocktakeRows(type) {
       const baseRows=type==='local'?localStocktake:overseasStocktake[type];
       return baseRows.map(row=>{
-        const impact=generatedImpact(type,row);
+        const impact=otherDocumentImpact(type,row);
         if(type==='local') {
           const system=row.system+impact;
           const diff=system-row.report;
@@ -860,7 +941,21 @@
       const key=stocktakeRowKey(result.type,row);
       return generatedDocuments.find(doc=>doc.resultId===result.id&&doc.items.some(item=>item.rowKey===key));
     }
-    function adjustmentGroupKey(result, row) { const documentType=row.direction==='其他入库'?'其他入库单':'其他出库单'; const scene=result.type==='local'?row.scene:''; return [documentType,monthEnd(result.month),result.warehouse,scene,row.direction].join('|'); }
+    function stocktakeDocumentScenes(result, row) {
+      if(result.type!=='local') return { firstScene:'盘点', secondScene:'平台仓报告差异调整' };
+      const localScenes={
+        '调拨入库':{ firstScene:'备货', secondScene:'待调查调整' },
+        '销售出库':{ firstScene:'销售', secondScene:'待调查调整' },
+        '退货入库':{ firstScene:'售后', secondScene:'待调查调整' },
+        '调拨出库':{ firstScene:'调拨', secondScene:'待调查调整' }
+      };
+      return localScenes[row.scene]||{ firstScene:'盘点', secondScene:'平台仓报告差异调整' };
+    }
+    function adjustmentGroupKey(result, row) {
+      const documentType=row.direction==='其他入库'?'其他入库单':'其他出库单';
+      const scenes=stocktakeDocumentScenes(result,row);
+      return [documentType,monthEnd(result.month),result.warehouse,scenes.firstScene,scenes.secondScene].join('|');
+    }
     function generationFailureGroups(result) {
       if(!result) return [];
       const groups=new Map();
@@ -901,8 +996,8 @@
       const prefix=row.direction==='其他入库'?'OIB':'OOB';
       const revision=result.id.split('-').pop(); const revisionSuffix=revision==='001'?'':`-R${revision}`;
       if(result.type==='local') {
-        const sequences={ '调拨入库|其他入库':'001', '调拨入库|其他出库':'002', '销售出库|其他出库':'003', '调拨出库|其他出库':'004', '确认丢失/损坏|其他出库':'005' };
-        return `${prefix}${dateKey}${sequences[`${row.scene}|${row.direction}`]||'999'}${revisionSuffix}`;
+        const sequences={ '调拨入库':'001', '销售出库':'002', '退货入库':'003', '调拨出库':'004' };
+        return `${prefix}${dateKey}${sequences[row.scene]||'999'}${revisionSuffix}`;
       }
       return `${prefix}${dateKey}${row.direction==='其他入库'?'001':'002'}${revisionSuffix}`;
     }
@@ -914,11 +1009,12 @@
         const documentDate=monthEnd(result.month);
         const documentType=row.direction==='其他入库'?'其他入库单':'其他出库单';
         const scene=result.type==='local'?row.scene:'';
-        const groupKey=[documentType,documentDate,result.warehouse,scene,row.direction].join('|');
+        const groupKey=adjustmentGroupKey(result,row);
         if(failures.some(group=>group.key===groupKey)||generatedDocuments.some(doc=>doc.resultId===result.id&&doc.groupKey===groupKey)) return;
         const documentNo=documentNumber(row,result);
         if(!groups.has(groupKey)) {
-          groups.set(groupKey,{resultId:result.id,stocktakeType:result.type,groupKey,documentNo,documentType,documentDate,warehouse:result.warehouse,firstScene:result.type==='local'?'盘点':'',secondScene:result.type==='local'?`${scene}${row.direction==='其他入库'?'调增':'调减'}`:'',generationCondition:condition,status:'已审核',businessNode:'盘点',relatedDocumentNo:result.id,warehouseTime:`${documentDate} 23:59:59`,createdBy:'系统',createdAt:`${documentDate} 23:59:59`,note:`盘点结果 ${result.id} 自动生成`,items:[]});
+          const scenes=stocktakeDocumentScenes(result,row);
+          groups.set(groupKey,{resultId:result.id,stocktakeType:result.type,groupKey,documentNo,documentType,documentDate,warehouse:result.warehouse,firstScene:scenes.firstScene,secondScene:scenes.secondScene,generationCondition:condition,status:'已审核',businessNode:'',relatedDocumentNo:result.id,warehouseTime:`${documentDate} 23:59:59`,createdBy:'系统',createdAt:`${documentDate} 23:59:59`,note:`盘点结果 ${result.id} 自动生成`,items:[]});
         }
         groups.get(groupKey).items.push({rowKey:stocktakeRowKey(result.type,row),sku:row.sku,name:row.name||row.sku,scene,quantity:Math.abs(row.diff),impact:row.direction==='其他入库'?Math.abs(row.diff):-Math.abs(row.diff),inventorySystem:'公共'});
       });
@@ -932,7 +1028,7 @@
       const no=value(`${prefix}-value`).trim();
       const exact=value(`${prefix}-match`)==='精确';
       const dateRange=value(`${prefix}-date`).match(/\d{4}-\d{2}-\d{2}/g)||[];
-      const rows=regularOrderRows(kind).filter(order=>(!no||(exact?order.documentNo===no:order.documentNo.includes(no)))&&(!value(`${prefix}-warehouse`)||order.warehouse===value(`${prefix}-warehouse`))&&(!value(`${prefix}-type`)||order.businessNode===value(`${prefix}-type`))&&(!dateRange[0]||order.documentDate>=dateRange[0])&&(!dateRange[1]||order.documentDate<=dateRange[1]));
+      const rows=regularOrderRows(kind).filter(order=>(!no||(exact?order.documentNo===no:order.documentNo.includes(no)))&&(!value(`${prefix}-warehouse`)||order.warehouse===value(`${prefix}-warehouse`))&&(!value(`${prefix}-type`)||order.businessType===value(`${prefix}-type`))&&(!dateRange[0]||order.documentDate>=dateRange[0])&&(!dateRange[1]||order.documentDate<=dateRange[1]));
       renderRegularOrders(kind,rows);
       toast('查询完成','success');
     }
@@ -946,7 +1042,7 @@
       const rows=suppliedRows||regularOrderRows(kind);
       const body=document.getElementById(`${kind}-order-body`);
       const ioLabel=kind==='inbound'?'入库':'出库';
-      body.innerHTML=rows.length?rows.map(order=>`<tr><td class="center">›</td><td>${order.documentNo}</td><td>${order.warehouse}</td><td>${order.businessNode}</td><td>${order.businessDocumentNo}</td><td class="right">${order.items.reduce((sum,item)=>sum+item.quantity,0)}</td><td>${order.warehouseTime}</td><td>${order.note}</td><td>${order.createdBy}</td><td class="center"><button class="link" onclick="openRegularOrder('${kind}','${order.documentNo}')">查看</button></td></tr>`).join(''):`<tr><td colspan="10" class="center" style="padding:32px;color:#999">暂无${ioLabel}单</td></tr>`;
+      body.innerHTML=rows.length?rows.map(order=>`<tr><td class="center">›</td><td>${order.documentNo}</td><td>${order.warehouse}</td><td>${order.businessType}</td><td>${order.businessDocumentNo}</td><td class="right">${order.items.reduce((sum,item)=>sum+item.quantity,0)}</td><td>${order.warehouseTime}</td><td>${order.note}</td><td>${order.createdBy}</td><td class="center"><button class="link" onclick="openRegularOrder('${kind}','${order.documentNo}')">查看</button></td></tr>`).join(''):`<tr><td colspan="10" class="center" style="padding:32px;color:#999">暂无${ioLabel}单</td></tr>`;
       document.getElementById(`${kind}-order-total`).textContent=rows.length;
     }
     function openRegularOrder(kind, documentNo) {
@@ -961,7 +1057,7 @@
           <div class="modal-field"><label>${ioLabel}单号：</label><div class="modal-value">${order.documentNo}</div></div>
           <div class="modal-field"><label>${ioLabel}仓库：</label><div class="modal-value">${order.warehouse}</div></div>
           <div class="modal-field"><label>${ioLabel}时间：</label><div class="modal-value">${order.warehouseTime}</div></div>
-          <div class="modal-field"><label>业务类型：</label><div class="modal-value">${order.businessNode}</div></div>
+          <div class="modal-field"><label>业务类型：</label><div class="modal-value">${order.businessType}</div></div>
           <div class="modal-field"><label>业务单据：</label><div class="modal-value">${order.businessDocumentNo}</div></div>
         </div>
         <div class="modal-field" style="margin:0 34px 8px"><label>备注：</label></div><div class="modal-note">${order.note}</div>
